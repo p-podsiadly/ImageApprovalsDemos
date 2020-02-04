@@ -9,11 +9,13 @@ find_package(GLEW REQUIRED)
 find_package(OpenGL REQUIRED)
 
 set(sources
-    "src/Demo.cpp"
-    "src/Demo.hpp"
     "src/GLFixture.cpp"
     "src/GLFixture.hpp"
+    "src/GLUtils.cpp"
+    "src/GLUtils.hpp"
     "src/main.cpp"
+    "src/Mandelbrot.cpp"
+    "src/Mandelbrot.hpp"
     "src/Tests.cpp"
 )
 
