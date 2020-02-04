@@ -35,6 +35,8 @@ public:
 
     GLuint glObject() const { return m_program; }
 
+    int getUniformLocation(const char* name) const;
+
     static GLProgram link(const GLShader& vertexShader, const GLShader& fragmentShader);
 
 private:
@@ -64,7 +66,7 @@ public:
     QuadRenderer& operator =(const QuadRenderer&) = delete;
     QuadRenderer& operator =(QuadRenderer&&) = delete;
 
-    void draw(const GLProgram& program) const;
+    void draw() const;
 
 private:
     GLuint m_vao = 0;

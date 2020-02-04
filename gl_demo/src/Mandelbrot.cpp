@@ -13,6 +13,9 @@ MandelbrotRenderer::MandelbrotRenderer()
 
     const char* fragmentShaderSrc =
         "#version 330 core\n"
+
+        "uniform mat3 tform;\n"
+
         "in vec2 pos;\n"
         "out vec4 out_color;\n"
 
@@ -42,7 +45,8 @@ MandelbrotRenderer::MandelbrotRenderer()
 
         "void main() {\n"
         "  int maxIter = 50;"
-        "  float shade = convergence(pos, maxIter);\n"
+        "  vec2 scenePos = (tform * vec3(pos, 1.0)).xy;\n"
+        "  float shade = convergence(scenePos, maxIter);\n"
         "  out_color = vec4(shadeToColor(shade / float(maxIter)), 1.0);\n"
         "}";
     
@@ -50,6 +54,8 @@ MandelbrotRenderer::MandelbrotRenderer()
     auto fragmentShader = GLShader::compile(GL_FRAGMENT_SHADER, fragmentShaderSrc);
 
     m_program = GLProgram::link(vertexShader, fragmentShader);
+
+    m_tformUniformLoc = m_program.getUniformLocation("tform");
 }
 
 void MandelbrotRenderer::drawFrame()
@@ -57,5 +63,16 @@ void MandelbrotRenderer::drawFrame()
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    m_quadRenderer.draw(m_program);
+    float scale = 1.0f / m_zoom;
+
+    float tform[] = {
+        scale, 0.0f,  -m_centerX,
+        0.0f,  scale, -m_centerY,
+        0.0f,  0.0f,  1.0f
+    };
+
+    glUseProgram(m_program.glObject());
+    glUniformMatrix3fv(m_tformUniformLoc, 1, GL_TRUE, tform);
+
+    m_quadRenderer.draw();
 }

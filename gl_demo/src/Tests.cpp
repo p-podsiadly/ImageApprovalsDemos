@@ -42,7 +42,8 @@ TEST_CASE_FIXTURE(GLFixture, "GLProgram and QuadRenderer")
 
     QuadRenderer renderer;
 
-    renderer.draw(program);
+    glUseProgram(program.glObject());
+    renderer.draw();
 
     auto image = getRenderedImage();
     Approvals::verify(ImageWriter(image));
@@ -56,4 +57,39 @@ TEST_CASE_FIXTURE(GLFixture, "MandelbrotRenderer")
 
     auto image = getRenderedImage();
     Approvals::verify(ImageWriter(image));
+}
+
+TEST_CASE_FIXTURE(GLFixture, "MandelbrotRenderer with translation and zoom")
+{
+    MandelbrotRenderer mandelbrotRenderer;
+
+    mandelbrotRenderer.setCenter(0.125f, -0.25f);
+
+    SUBCASE("zoom equal to 1")
+    {
+        mandelbrotRenderer.drawFrame();
+
+        auto image = getRenderedImage();
+        Approvals::verify(ImageWriter(image));
+    }
+
+    SUBCASE("zoom greater than 1")
+    {
+        mandelbrotRenderer.setZoom(2.0f);
+
+        mandelbrotRenderer.drawFrame();
+
+        auto image = getRenderedImage();
+        Approvals::verify(ImageWriter(image));
+    }
+
+    SUBCASE("zoom less than 1")
+    {
+        mandelbrotRenderer.setZoom(0.5f);
+
+        mandelbrotRenderer.drawFrame();
+
+        auto image = getRenderedImage();
+        Approvals::verify(ImageWriter(image));
+    }
 }

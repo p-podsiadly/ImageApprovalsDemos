@@ -90,6 +90,16 @@ GLProgram& GLProgram::operator =(GLProgram&& rhs)
     return *this;
 }
 
+int GLProgram::getUniformLocation(const char* name) const
+{
+    if(m_program)
+    {
+        return glGetUniformLocation(m_program, name);
+    }
+
+    return -1;
+}
+
 GLProgram GLProgram::link(const GLShader& vertexShader, const GLShader& fragmentShader)
 {
     GLProgram prog;
@@ -147,10 +157,8 @@ QuadRenderer::~QuadRenderer()
     glDeleteBuffers(1, &m_vertexBuffer);
 }
 
-void QuadRenderer::draw(const GLProgram& program) const
+void QuadRenderer::draw() const
 {
-    glUseProgram(program.glObject());
-
     glBindVertexArray(m_vao);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
