@@ -7,6 +7,7 @@ find_package(doctest REQUIRED)
 find_package(sdl2 REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(ZLIB REQUIRED)
 
 set(sources
     "src/GLFixture.cpp"
@@ -29,6 +30,7 @@ target_link_libraries(
         sdl2::sdl2
         GLEW::GLEW
         OpenGL::GL
+        ZLIB::ZLIB
         "$<$<CXX_COMPILER_ID:MSVC>:-IGNORE:4099>"
 )
 
