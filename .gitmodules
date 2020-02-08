@@ -1,0 +1,3 @@
+[submodule "ImageApprovals"]
+	path = ImageApprovals
+	url = https://github.com/p-podsiadly/ImageApprovals.git

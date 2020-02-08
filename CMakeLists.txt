@@ -5,7 +5,7 @@ project(ImageApprovalsDemos)
 include("conan.cmake")
 
 conan_cmake_run(
-    REQUIRES "imageapprovals/master@ppodsiadly/stable"
+    REQUIRES "approvaltests.cpp/8.2.0"
              "doctest/2.3.6"
              "sdl2/2.0.10@bincrafters/stable"
              "glew/2.1.0@bincrafters/stable"
@@ -15,6 +15,9 @@ conan_cmake_run(
 )
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}")
+
+set(ImageApprovals_ENABLE_TEST OFF)
+add_subdirectory(ImageApprovals)
 
 enable_testing()
 

@@ -1,4 +1,7 @@
 /.vscode/
 /build/
 
+/.vs/
+/out/
+
 /gl_demo/approval_tests/*.received.png
