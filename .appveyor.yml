@@ -26,9 +26,10 @@ install:
   # conan profile, on windows, powershell
   # execption is thrown and the build fails.
   - cmd: conan user 
+  - ps: conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan 
 
 before_build:
-  - ps: git submodule update --init
+  - ps: git submodule update --init | Out-Null
 
 build_script:
   - ps: mkdir build | Out-Null
