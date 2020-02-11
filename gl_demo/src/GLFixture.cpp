@@ -77,7 +77,7 @@ struct GLFixture::Impl
         // comonents and row alignment of 4 bytes.
         Image img(
             PixelFormat::getRgbAlphaU8(),
-            ColorSpace::getLinear(),
+            ColorSpace::getLinearSRgb(),
             Size(wndWidth, wndHeight),
             4);
 
