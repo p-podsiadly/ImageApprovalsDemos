@@ -14,31 +14,25 @@ install:
   - ps: >-
       if($isWindows) {
         $env:Path = "C:\Python37;C:\Python37\Scripts;" + $env:Path;
+        python --version | Write-Host;
         python -m pip install --upgrade pip;
         python -m pip install conan;
       } elseif($isLinux) {
         sudo apt install -y python3-pip;
         sudo pip3 install conan;
       }
-  # Run conan user only on windows
-  # cmake is run from powershell below,
-  # and for some reason when there's no
-  # conan profile, on windows, powershell
-  # execption is thrown and the build fails.
-  - cmd: conan user 
-  - ps: conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan 
+       
+      conan user;
+
+      conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan;
 
 before_build:
-  - ps: git submodule update --init | Out-Null
+  - pwsh: git submodule update --init
 
 build_script:
   - ps: mkdir build | Out-Null
-  - ps: mkdir install | Out-Null
   - ps: cd build
   - ps: cmake .. -DCMAKE_BUILD_TYPE="$env:CONFIGURATION"
   - ps: cmake --build . --config "$env:CONFIGURATION"
-  - ps: cd ..
 
-test_script:
-  - ps: cd build
-  - ps: ctest --verbose
+test: off
