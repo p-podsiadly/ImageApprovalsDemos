@@ -5,7 +5,7 @@ project(ImageApprovalsDemos)
 include("conan.cmake")
 
 conan_cmake_run(
-    REQUIRES "approvaltests.cpp/8.2.0"
+    REQUIRES "approvaltests.cpp/8.3.0"
              "doctest/2.3.6"
              "sdl2/2.0.10@bincrafters/stable"
              "glew/2.1.0@bincrafters/stable"
