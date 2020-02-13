@@ -8,4 +8,4 @@ using namespace ApprovalTests;
 auto dirDisposer = Approvals::useApprovalsSubdirectory("../approval_tests");
 
 auto comparatorDisposer
-    = Comparator::registerForAllExtensions<ThresholdCompareStrategy>();
+    = ImageComparator::registerForAllExtensions<ThresholdCompareStrategy>();
