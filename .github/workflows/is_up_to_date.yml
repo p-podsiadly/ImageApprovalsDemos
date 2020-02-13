@@ -1,0 +1,37 @@
+name: Is up to date?
+
+on: [push]
+
+jobs:
+  check:
+    name: Check ImageApprovals
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout demos
+        uses: actions/checkout@v2
+        with:
+          path: demos   
+
+      - name: Checkout ImageApprovals
+        uses: actions/checkout@v2
+        with:
+          repository: p-podsiadly/ImageApprovals
+          path: upstream
+
+      - name: Update submodules
+        run: |
+          cd demos/
+          git submodule update --init
+
+      - name: Check commit hashes
+        run: |
+          VER_IN_USE=`(cd demos/ImageApprovals/ && git log -n1 | grep commit)`
+          UPSTREAM_VER=`(cd upstream/ && git log -n1 | grep commit)`
+          
+          if [ $VER_IN_USE != $UPSTREAM_VER ]; then
+            echo "The project does not use latest master version."
+            echo "  Version in use: $VER_IN_USE"
+            echo "  Upstream master: $UPSTREAM_VER"  
+            exit 1
+          fi
