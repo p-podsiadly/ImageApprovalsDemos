@@ -29,7 +29,7 @@ jobs:
           VER_IN_USE=`(cd demos/ImageApprovals/ && git log -n1 | grep commit)`
           UPSTREAM_VER=`(cd upstream/ && git log -n1 | grep commit)`
           
-          if [ $VER_IN_USE != $UPSTREAM_VER ]; then
+          if [ "$VER_IN_USE" != "$UPSTREAM_VER" ]; then
             echo "The project does not use latest master version."
             echo "  Version in use: $VER_IN_USE"
             echo "  Upstream master: $UPSTREAM_VER"  
