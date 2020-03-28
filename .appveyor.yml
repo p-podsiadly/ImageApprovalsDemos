@@ -1,6 +1,6 @@
 environment:
   matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
       CC: gcc-7
       CXX: g++-7
@@ -12,24 +12,8 @@ configuration: Release
 
 clone_depth: 1
 
-install:
-  - ps: >-
-      if($isWindows) {
-        $env:Path = "C:\Python37;C:\Python37\Scripts;" + $env:Path;
-        python --version | Write-Host;
-        python -m pip install --upgrade pip;
-        python -m pip install conan;
-      } elseif($isLinux) {
-        sudo apt install -y python3-pip;
-        sudo pip3 install conan;
-      }
-       
-      conan user;
-
-      conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan;
-
-before_build:
-  - pwsh: git submodule update --init
+install:  
+  -sh: sudo apt-get install libpng-dev libglew-dev libsdl2-dev 
 
 build_script:
   - ps: mkdir build | Out-Null

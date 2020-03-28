@@ -2,12 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(GLDemo)
 
-if(NOT TARGET ImageApprovals::ImageApprovals)
-    find_package(ImageApprovals REQUIRED)
-endif()
-
-find_package(doctest REQUIRED)
-find_package(sdl2 REQUIRED)
+find_package(PNG REQUIRED)
+find_package(SDL2 REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(OpenGL REQUIRED)
 
@@ -24,12 +20,19 @@ set(sources
 
 add_executable(GLDemo ${sources})
 
+target_include_directories(
+    GLDemo
+    PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/../dependencies/"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../dependencies/ApprovalTests.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../dependencies/ImageApprovals"
+)
+
 target_link_libraries(
     GLDemo
     PRIVATE
-        ImageApprovals::ImageApprovals
-        doctest::doctest
-        sdl2::sdl2
+        PNG::PNG
+        SDL2::SDL2
         GLEW::GLEW
         OpenGL::GL
         "$<$<CXX_COMPILER_ID:MSVC>:-IGNORE:4099>"
@@ -37,4 +40,4 @@ target_link_libraries(
 
 target_compile_options(GLDemo PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/FC>")
 
-doctest_discover_tests(GLDemo TEST_PREFIX "GLDemo/")
+add_test(NAME GLDemo COMMAND GLDemo)
