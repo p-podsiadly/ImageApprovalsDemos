@@ -5,6 +5,8 @@ project(GLDemo)
 find_package(PNG REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(GLEW REQUIRED)
+
+set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
 
 set(sources
