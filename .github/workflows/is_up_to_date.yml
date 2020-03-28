@@ -19,6 +19,6 @@ jobs:
           repository: p-podsiadly/ImageApprovals
           path: upstream
 
-      - name: Check commit hashes
+      - name: Check ImageApprovals.hpp
         run: |
           diff demos/dependencies/ImageApprovals/ImageApprovals.hpp upstream/single_header/ImageApprovals.hpp

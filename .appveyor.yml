@@ -13,7 +13,9 @@ configuration: Release
 clone_depth: 1
 
 install:  
-  -sh: sudo apt-get install libpng-dev libglew-dev libsdl2-dev 
+  - sh: >-
+      sudo apt-get update;
+      sudo apt-get install -y libpng-dev libglew-dev libsdl2-dev;
 
 build_script:
   - ps: mkdir build | Out-Null
